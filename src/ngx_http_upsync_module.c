@@ -1501,16 +1501,19 @@ ngx_http_upsync_consul_services_parse_json(void *data)
         cJSON *addr, *port, *tags, *tag_next;
         size_t addr_len, port_len;
         u_char port_buf[8];
-
-        addr = cJSON_GetObjectItem(server_next, "ServiceAddress");
-        if (addr == NULL || addr->valuestring == NULL
-            || addr->valuestring[0] == '\0')
-        {
-            addr = cJSON_GetObjectItem(server_next, "Address");
-            if (addr == NULL || addr->valuestring == NULL) {
-                continue;
-            }
+        addr = cJSON_GetObjectItem(server_next, "Address");
+        if (addr == NULL || addr->valuestring == NULL) {
+            continue;
         }
+//        addr = cJSON_GetObjectItem(server_next, "ServiceAddress");
+//        if (addr == NULL || addr->valuestring == NULL
+//            || addr->valuestring[0] == '\0')
+//        {
+//            addr = cJSON_GetObjectItem(server_next, "Address");
+//            if (addr == NULL || addr->valuestring == NULL) {
+//                continue;
+//            }
+//        }
 
         port = cJSON_GetObjectItem(server_next, "ServicePort");
         if (port == NULL || port->valueint < 1 || port->valueint > 65535) {
@@ -1643,19 +1646,24 @@ ngx_http_upsync_consul_health_parse_json(void *data)
         cJSON *addr, *checks, *check_next, *node, *port, *service, *tags, *tag_next;
         size_t addr_len, port_len;
         u_char port_buf[8];
-
-        service = cJSON_GetObjectItem(server_next, "Service");
-
-        addr = cJSON_GetObjectItem(service, "Address");
-        if (addr == NULL || addr->valuestring == NULL
-            || addr->valuestring[0] == '\0')
-        {
-            node = cJSON_GetObjectItem(server_next, "Node");
-            addr = cJSON_GetObjectItem(node, "Address");
-            if (addr == NULL || addr->valuestring == NULL) {
-                continue;
-            }
+        node = cJSON_GetObjectItem(server_next, "Node");
+        addr = cJSON_GetObjectItem(node, "Address");
+        if (addr == NULL || addr->valuestring == NULL) {
+            continue;
         }
+
+//        service = cJSON_GetObjectItem(server_next, "Service");
+//
+//        addr = cJSON_GetObjectItem(service, "Address");
+//        if (addr == NULL || addr->valuestring == NULL
+//            || addr->valuestring[0] == '\0')
+//        {
+//            node = cJSON_GetObjectItem(server_next, "Node");
+//            addr = cJSON_GetObjectItem(node, "Address");
+//            if (addr == NULL || addr->valuestring == NULL) {
+//                continue;
+//            }
+//        }
 
         port = cJSON_GetObjectItem(service, "Port");
         if (port == NULL || port->valueint < 1 || port->valueint > 65535) {
