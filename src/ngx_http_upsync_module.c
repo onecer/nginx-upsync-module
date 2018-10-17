@@ -1652,7 +1652,7 @@ ngx_http_upsync_consul_health_parse_json(void *data)
             continue;
         }
 
-//        service = cJSON_GetObjectItem(server_next, "Service");
+        service = cJSON_GetObjectItem(server_next, "Service");
 //
 //        addr = cJSON_GetObjectItem(service, "Address");
 //        if (addr == NULL || addr->valuestring == NULL
